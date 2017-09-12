@@ -12,7 +12,7 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import LoginModal from './components/loginModal'
 //route components
 import Home from './components/home/home';
-
+import MainStore from './store/mainStore';
 export default class App extends React.Component {
   constructor(props){
     super(props);
