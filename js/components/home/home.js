@@ -2,6 +2,9 @@ import React from 'react';
 import { Grid, Cell } from 'react-mdl/lib/Grid';
 import ListComponent from './listComponent';
 import MainStore from './../../store/mainStore';
+import { Link } from  'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 export default class Home extends React.Component{
   constructor(props){
@@ -59,8 +62,10 @@ export default class Home extends React.Component{
   }
 
   render(){
+    var addButtonStyle = {float: 'right'};
     return(
       <div>
+      <Link style={addButtonStyle} to="/bloggerworld/addblog"> <RaisedButton label="Add Blog"/> </Link>
       <Grid>
       <Cell col={12-this.state.listCol}>
         {this.renderBlog()}
@@ -69,6 +74,7 @@ export default class Home extends React.Component{
         {this.renderList()}
       </Cell>
       </Grid>
+
       </div>
     )
   }

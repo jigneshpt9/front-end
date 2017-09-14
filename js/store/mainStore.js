@@ -8,13 +8,20 @@ class MainStore extends EventEmitter{
     this.login = []
   }
   fetchBlogs(){
-      AJAX('GET','',{}).then((response)=>{
+      AJAX('GET','/blog',{}).then((response)=>{
         this.blogs = response.data;
         this.emit('blogs_fetched')
       })
       }
   getBlogs(){
     return this.blogs;
+  }
+
+  postBlog(data)
+  {
+         AJAX('POST','/blog',data).then((response)=>{
+             this.emit('blog_posted')
+         })
   }
 
  login(){

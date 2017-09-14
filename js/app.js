@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from  'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from  'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import AppBar from 'material-ui/AppBar';
@@ -13,6 +13,8 @@ import LoginModal from './components/loginModal'
 //route components
 import Home from './components/home/home';
 import MainStore from './store/mainStore';
+import Addblog from './components/blog/addblog'
+
 export default class App extends React.Component {
   constructor(props){
     super(props);
@@ -24,6 +26,7 @@ export default class App extends React.Component {
   log(){
     console.log("left button was clicked");
   }
+
 
   componentWillMount(){
     MainStore.on('login_done',()=>{
@@ -71,7 +74,10 @@ export default class App extends React.Component {
           />
 
             <Router>
-              <Route path="/" component={Home}/>
+             <Switch>
+              <Route exact path="/bloggerworld" component={Home}/>
+              <Route exact path="/bloggerworld/addblog" component={Addblog}/>
+              </Switch>
             </Router>
         </div>
       </MuiThemeProvider>
