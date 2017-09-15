@@ -23,7 +23,14 @@ class MainStore extends EventEmitter{
              this.emit('blog_posted')
          })
   }
-
+  searchBlog(keyWord)
+  {
+         AJAX('GET','/blog/'+keyWord,{}).then((response)=>{
+             this.blogs = response.data;
+             console.log(this.blogs);
+             this.emit('blogs_fetched')
+         })
+  }
  login(){
    AJAX('GET','',{}).then((response)=>{
      this.login = response.status;

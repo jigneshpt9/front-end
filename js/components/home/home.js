@@ -66,6 +66,7 @@ export default class Home extends React.Component{
     return(
       <div>
       <Link style={addButtonStyle} to="/bloggerworld/addblog"> <RaisedButton label="Add Blog"/> </Link>
+      <Link style={addButtonStyle} to="/bloggerworld/searchblog"> <RaisedButton label="Search Blog"/> </Link>
       <Grid>
       <Cell col={12-this.state.listCol}>
         {this.renderBlog()}
