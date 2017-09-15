@@ -61,12 +61,23 @@ export default class Home extends React.Component{
     }
   }
 
+
+  handleClick(){
+  	var keyWord;
+    console.log(this.refs);
+  	keyWord = this.refs.search.value.trim();
+    MainStore.searchBlog(keyWord);
+  }
+
   render(){
     var addButtonStyle = {float: 'right'};
     return(
       <div>
+      <input ref="search" type="search" placeholder="Search blogs.." />
+      <button onClick={this.handleClick.bind(this)}>Go</button>
+
       <Link style={addButtonStyle} to="/bloggerworld/addblog"> <RaisedButton label="Add Blog"/> </Link>
-      <Link style={addButtonStyle} to="/bloggerworld/searchblog"> <RaisedButton label="Search Blog"/> </Link>
+
       <Grid>
       <Cell col={12-this.state.listCol}>
         {this.renderBlog()}
