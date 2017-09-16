@@ -14,8 +14,6 @@ import LoginModal from './components/loginModal'
 import Home from './components/home/home';
 import MainStore from './store/mainStore';
 import Addblog from './components/blog/addblog'
-import Searchblog from './components/blog/searchblog'
-import SearchBlogResult from './components/blog/searchblogresult'
 
 export default class App extends React.Component {
   constructor(props){
@@ -79,7 +77,6 @@ export default class App extends React.Component {
              <Switch>
               <Route exact path="/bloggerworld" component={Home}/>
               <Route exact path="/bloggerworld/addblog" component={Addblog}/>
-              <Route exact path="/bloggerworld/searchblog" component={Searchblog}/>
               
               </Switch>
             </Router>

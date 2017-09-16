@@ -18,7 +18,7 @@ export default class ListComponent extends React.Component{
     };
     return(
       <Paper onClick={this.props.onClick} style={style.paper} zDepth={2}>
-        <h3>{this.props.heading}</h3>
+        <h4>{this.props.heading.substring(0,25)+"..."}</h4>
         <p>{(this.props.content!==null)?this.props.content.substring(0,100):''+"..."}</p>
       </Paper>
     )

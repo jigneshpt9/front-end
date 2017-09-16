@@ -4,7 +4,9 @@ import ListComponent from './listComponent';
 import MainStore from './../../store/mainStore';
 import { Link } from  'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
+import SearchBar from 'material-ui-search-bar';
 
+import { Form, Textarea } from 'react-form';
 
 export default class Home extends React.Component{
   constructor(props){
@@ -37,6 +39,9 @@ export default class Home extends React.Component{
   }
 
   renderList(){
+    if(this.state.list == null){
+      return (<div><h3>No Blogs found</h3></div>)
+    }
     const list = this.state.list.map((item,index)=>
       <ListComponent key={index} onClick={this.blogSelected.bind(this,index)} heading={item.title} content={item.content} />
     );
@@ -48,6 +53,10 @@ export default class Home extends React.Component{
       return (<div></div>);
     }
     else{
+      if(this.state.list == null){
+        return (<div><h3>No Blogs found</h3></div>)
+      }
+      else{
       return (
         <div>
           <h1>
@@ -56,9 +65,17 @@ export default class Home extends React.Component{
           <p>
           {this.state.list[this.state.selectedBlog].content}
           </p>
+          <h4>Comment on this Blog</h4>
+                 <textarea
+                    field='name'
+                    placeholder='comments..' />
+                  <br/>
+                 <button type='submit'>Post Comment</button>
         </div>
-      );
+
+    );
     }
+   }
   }
 
 
@@ -66,15 +83,26 @@ export default class Home extends React.Component{
   	var keyWord;
     console.log(this.refs);
   	keyWord = this.refs.search.value.trim();
-    MainStore.searchBlog(keyWord);
+
   }
 
   render(){
     var addButtonStyle = {float: 'right'};
     return(
       <div>
-      <input ref="search" type="search" placeholder="Search blogs.." />
-      <button onClick={this.handleClick.bind(this)}>Go</button>
+
+      <SearchBar
+      hintText="Search Blogs"
+      onChange={(value) => {
+        console.log(value);
+        MainStore.searchBlog(value)
+      }}
+      onRequestSearch={() => console.log('onRequestSearch')}
+      style={{
+        margin: '0',
+        maxWidth: 700
+      }}
+      />
 
       <Link style={addButtonStyle} to="/bloggerworld/addblog"> <RaisedButton label="Add Blog"/> </Link>
 
