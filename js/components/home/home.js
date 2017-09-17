@@ -6,7 +6,8 @@ import { Link } from  'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import SearchBar from 'material-ui-search-bar';
 
-import { Form, Text} from 'react-form';
+import { Form, Textarea} from 'react-form';
+
 import ReactForm from 'react-forms-component';
 import ReactFormValidations from 'react-forms-component/validations';
 
@@ -69,26 +70,29 @@ export default class Home extends React.Component{
           </p>
           <h4>Comment on this Blog</h4>
 
-  <Form
-    onSubmit={(values) => {
-      console.log('Success!', values)
-    }}
-    validate={({ name }) => {
-      return {
-        name: !name ? 'A name is required' : undefined
-      }
-    }}
-  >
-    {({submitForm}) => {
-      return (
-        <form onSubmit={submitForm}>
-          <Text field='name' />
-          <br/>
-          <button type='submit'>Submit</button>
-        </form>
-      )
-    }}
-  </Form>
+          <Form
+            onSubmit={(values) => {
+              console.log('Success!', values)
+            }}
+            validate={({ name }) => {
+              return {
+                name: !name ? 'A name is required' : undefined
+              }
+            }}
+          >
+          {({submitForm}) => {
+            return (
+              <form onSubmit={submitForm}>
+              <Textarea // This is the built-in Textarea formInput
+              field='name'
+              placeholder='Short Bio'
+              />
+                <br/>
+                <button type='submit'>Submit</button>
+              </form>
+            )
+          }}
+        </Form>
 
 
         </div>
