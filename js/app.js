@@ -70,14 +70,12 @@ export default class App extends React.Component {
           title="Blogger's World"
           onLeftIconButtonTouchTap={this.log}
           iconElementRight={this.setRightIcon()}
-
           />
-
             <Router>
              <Switch>
               <Route exact path="/bloggerworld" component={Home}/>
               <Route exact path="/bloggerworld/addblog" component={Addblog}/>
-              
+
               </Switch>
             </Router>
         </div>

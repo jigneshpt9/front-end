@@ -6,10 +6,7 @@ import { Link } from  'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import SearchBar from 'material-ui-search-bar';
 
-import { Form, Textarea} from 'react-form';
-
-import ReactForm from 'react-forms-component';
-import ReactFormValidations from 'react-forms-component/validations';
+import CommentBox from './../blog/blogcomment'
 
 export default class Home extends React.Component{
   constructor(props){
@@ -68,33 +65,7 @@ export default class Home extends React.Component{
           <p>
           {this.state.list[this.state.selectedBlog].content}
           </p>
-          <h4>Comment on this Blog</h4>
-
-          <Form
-            onSubmit={(values) => {
-              console.log('Success!', values)
-            }}
-            validate={({ name }) => {
-              return {
-                name: !name ? 'A name is required' : undefined
-              }
-            }}
-          >
-          {({submitForm}) => {
-            return (
-              <form onSubmit={submitForm}>
-              <Textarea // This is the built-in Textarea formInput
-              field='name'
-              placeholder='Short Bio'
-              />
-                <br/>
-                <button type='submit'>Submit</button>
-              </form>
-            )
-          }}
-        </Form>
-
-
+          <CommentBox/>
         </div>
 
     );
