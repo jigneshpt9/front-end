@@ -3,7 +3,7 @@ import { Grid, Cell } from 'react-mdl/lib/Grid';
 import ListComponent from './listComponent';
 import MainStore from './../../store/mainStore';
 import { Link } from  'react-router-dom';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import SearchBar from 'material-ui-search-bar';
 
 import CommentBox from './../blog/blogcomment'
@@ -63,9 +63,9 @@ export default class Home extends React.Component{
             {this.state.list[this.state.selectedBlog].title}
           </h1>
           <p>
-          {this.state.list[this.state.selectedBlog].content}
+            {this.state.list[this.state.selectedBlog].content}
           </p>
-          <CommentBox/>
+          <CommentBox comments={this.state.list[this.state.selectedBlog].comments}/>
         </div>
 
     );
@@ -85,7 +85,6 @@ export default class Home extends React.Component{
     var addButtonStyle = {float: 'right'};
     return(
       <div>
-
       <SearchBar
       hintText="Search Blogs"
       onChange={(value) => {
@@ -99,7 +98,7 @@ export default class Home extends React.Component{
       }}
       />
 
-      <Link style={addButtonStyle} to="/bloggerworld/addblog"> <RaisedButton label="Add Blog"/> </Link>
+      <Link style={addButtonStyle} to="/bloggerworld/addblog"> <FlatButton label="Add Blog"/> </Link>
 
       <Grid>
       <Cell col={12-this.state.listCol}>

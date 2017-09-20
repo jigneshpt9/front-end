@@ -27,20 +27,20 @@ class MainStore extends EventEmitter{
   {
          AJAX('GET','/blog/'+keyWord,{}).then((response)=>{
              this.blogs = response.data;
-             console.log(this.blogs);
              this.emit('blogs_fetched')
          })
   }
- login(){
-   AJAX('GET','',{}).then((response)=>{
-     this.login = response.status;
-     if ( this.login === 'OK')
-     {
+  signup(data)
+  {
+    AJAX('POST','/user',data).then((response)=>{
+        this.emit('user_signedup')
+    })
+  }
+
+ loginUser(data){
+   AJAX('GET', '/'+data.emailId+'/login/'+data.password,{}).then((response)=>{
+        console.log("login success")
         this.emit('login_done')
-     }
-     else {
-       this.emit('login_failed')
-     }
    })
   }
 

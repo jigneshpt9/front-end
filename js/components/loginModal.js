@@ -2,24 +2,25 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
-
+import MainStore from '../store/mainStore';
 
 export default class LoginModal extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      open: false
+      open: false,
+      loginVisible:true
    }
  }
 
   login()
   {
     let data = {
-      username:this.refs.username.input.value,
+      emailId:this.refs.username.input.value,
       password:this.refs.password.input.value
     };
-    MainStore.login(data);
+    MainStore.loginUser(data);
+    this.handleClose();
   }
 
   handleOpen(){
@@ -45,8 +46,8 @@ export default class LoginModal extends React.Component {
     ];
 
     return (
-      <div>
-        <RaisedButton label="Login" onClick={this.handleOpen.bind(this)} />
+      <div style={{float:'right'}}>
+        <FlatButton label="Login" style={{color:'white'}} onClick={this.handleOpen.bind(this)} />
         <Dialog
           title="Login"
           actions={actions}

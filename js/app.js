@@ -10,6 +10,8 @@ import Toggle from 'material-ui/Toggle';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import LoginModal from './components/loginModal'
+import SignupModal from './components/signupmodal'
+
 //route components
 import Home from './components/home/home';
 import MainStore from './store/mainStore';
@@ -41,13 +43,13 @@ export default class App extends React.Component {
       return(
         <div>
           <LoginModal />
+          <SignupModal />
         </div>
       );
     }
     else{
       return(
         <div>
-
         </div>
       )
     }
@@ -70,6 +72,7 @@ export default class App extends React.Component {
           title="Blogger's World"
           onLeftIconButtonTouchTap={this.log}
           iconElementRight={this.setRightIcon()}
+
           />
             <Router>
              <Switch>

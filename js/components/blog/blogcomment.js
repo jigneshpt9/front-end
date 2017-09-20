@@ -43,27 +43,24 @@ class CommentForm extends React.Component {
   }
 }
 
-
 export default class CommentBox extends React.Component {
-  constructor() {
-     super();
-      this.state = {
-
-          comments: [
-            { id: 1,  body: 'Great picture!' },
-            { id: 2,  body: 'Excellent stuff' },
-            { id: 3,  body: 'Excellent stuff,wow' }            ]
-          };
+  constructor(props) {
+     super(props);
       }
 
   _getComments() {
-      return this.state.comments.map((comment) => {
+      console.log(this.props.comments);
+      return this.props.comments.map((comment) => {
        return (
           <Comment
-            body={comment.body}
-            key={comment.id} />
+            key={comment.commentId}
+            createdTime={comment.createdTime}
+            body={comment.text}
+            />
+
             );
       });
+
     }
 
   _getCommentsTitle(commentCount) {
@@ -78,10 +75,10 @@ export default class CommentBox extends React.Component {
 
   _addComment(author, body) {
     const comment = {
-        id: this.state.comments.length + 1,
+        commentId: this.state.comments.length + 1,
         body
        };
- this.setState({ comments: this.state.comments.concat([comment]) });
+     //this.setState({ comments: this.state.comments.concat([comment]) });
   }
   render(){
     const comments = this._getComments();
