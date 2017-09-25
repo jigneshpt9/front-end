@@ -30,9 +30,18 @@ class MainStore extends EventEmitter{
 
   postBlog(data)
   {
+      if (data.title == '' || data.content == '')
+      {
+          this.emit('blog_post_empty')
+      }
+      else if (data.title.length <= 10 || data.content.length <= 100){
+         this.emit('blog_post_data_length_invalid')
+      }
+      else {
          AJAX('POST','/blog',data,this.getHeader()).then((response)=>{
              this.emit('blog_posted')
          })
+       }
   }
   searchBlog(keyWord)
   {
@@ -48,9 +57,18 @@ class MainStore extends EventEmitter{
     })
   }
   addComment(blogId,data){
+    console.log(this.token)
+    if (typeof this.token == 'undefined'){
+      this.emit('comment_login_required')
+    }
+    else if (data.text == ''){
+        this.emit('comment_blank')
+    }
+    else {
     AJAX('POST','/blog/comment/'+blogId,data,this.getHeader()).then((response)=>{
         this.emit('comment_posted')
     })
+  }
   }
 
  loginUser(data){

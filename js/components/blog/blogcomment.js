@@ -14,11 +14,31 @@ class Comment extends React.Component {
     }
 
 class CommentForm extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+       error:''
+    }
+
+  }
+
+  componentWillMount(){
+    MainStore.on('comment_blank',()=>{
+      this.setState({
+        error:'Provide comment'
+      });
+    });
+    MainStore.on('comment_login_required',()=>{
+      this.setState({
+        error:'Please login to post comment'
+      });
+    });
+  }
        render() {
           return (
          <div>
         <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
-            <h3 style={{color:'blue'}}>Join the discussion</h3>
+            <h3 style={{color:'orange'}}>Join the discussion</h3>
             <div className="common-form-fields">
             <br/>
               <textarea placeholder="Comment:"
@@ -27,6 +47,7 @@ class CommentForm extends React.Component {
             </div>
             <br/>
           <div className="comment-form-actions">
+            <p  style={{color:'red'}}>{this.state.error}</p>
               <button type="submit">
                 Post Comment
               </button>
@@ -89,7 +110,7 @@ export default class CommentBox extends React.Component {
     return(
       <div className="comment-box">
       <CommentForm addComment={this._addComment.bind(this)} />
-       <h3 style={{color:'blue'}}>Comments</h3>
+       <h3 style={{color:'orange'}}>Comments</h3>
        <h4 className="comment-count">{this._getCommentsTitle(comments.length)}</h4>
        <div className="comment-list">
           {comments}

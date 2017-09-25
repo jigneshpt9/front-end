@@ -8,7 +8,7 @@ export default class Addblog extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-       blogData: true
+       error:''
     }
 }
 
@@ -17,15 +17,26 @@ handlePostBlog()
   let data = {
     title:this.refs.blogTitle.input.value,
     content:this.refs.blogContent.input.refs.input.value,
+    lastUpdated: new Date(),
     blogOwner :MainStore.getBlogOwnerData()
   };
-
+ console.log(data.lastUpdated);
    MainStore.postBlog(data);
 }
 
 componentWillMount(){
   MainStore.on('blog_posted',()=>{
     window.location.hash = '/';
+  });
+  MainStore.on('blog_post_empty',()=>{
+    this.setState({
+        error:'Provide title/content'
+    });
+  });
+  MainStore.on('blog_post_data_length_invalid',()=>{
+    this.setState({
+        error:'Title should be mininum 15 chars and Content should be minimum 50 chars'
+    });
   });
 }
 
@@ -36,22 +47,25 @@ componentWillUnmount(){
 render(){
   return(
     <div>
+    <br />
+    <p style={{color:'red', fontSize: '200%'}}>{this.state.error}</p>
+    <br />
     <h3>
-       Blog Title
+       Blog Title(Minimum 10 chars)
     </h3>
      <TextField
-          fullWidth={true}
+          fullWidth={false}
           ref="blogTitle"
      >
     </TextField>
     <br/>
     <h3>
-        Blog Content
+        Blog Content(Minimum 100 chars)
     </h3>
      <TextField
           rows={10}
           multiLine={true}
-          fullWidth={true}
+          fullWidth={false}
           ref="blogContent"
 
     >

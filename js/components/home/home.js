@@ -15,6 +15,7 @@ export default class Home extends React.Component{
       listCol: 12,
       selectedBlog:null,
       refresh:false,
+      signupSatus:''
     }
     MainStore.fetchBlogs();
   }
@@ -65,6 +66,11 @@ export default class Home extends React.Component{
           <p>
             {this.state.list[this.state.selectedBlog].content}
           </p>
+          <p style={{color:'orange', fontSize: '150%'}}>
+            Created by: {this.state.list[this.state.selectedBlog].blogOwner.firstName}  {this.state.list[this.state.selectedBlog].blogOwner.lastName}
+            <br />
+            Last updated :{this.state.list[this.state.selectedBlog].lastUpdated}
+          </p>
           <CommentBox comments={this.state.list[this.state.selectedBlog].comments} blogId={this.state.list[this.state.selectedBlog].id}/>
         </div>
 
@@ -98,6 +104,7 @@ export default class Home extends React.Component{
       }}
       />
 
+      <br />
       <Grid>
       <Cell col={12-this.state.listCol}>
         {this.renderBlog()}

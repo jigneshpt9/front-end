@@ -11,8 +11,18 @@ export default class SignupModal extends React.Component {
     super(props);
     this.state = {
       open: false,
-      error:{}
+      error:{},
+      signupStatus:''
    }
+ }
+
+ componentWillMount(){
+   MainStore.on('user_signedup',()=>{
+     console.log('user signedup success')
+     this.setState({
+       signupStatus:'Signup Successful, login with your credentials.'
+     });
+   });
  }
  validateEmail(email){
    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\ w+)*(\.\w{2,3})+$/.test(email)){
@@ -88,7 +98,7 @@ signup()
       password:this.refs.passwd.input.value,
    }
    MainStore.signup(data);
-   this.handleClose();
+
 }
 
   render() {
@@ -120,7 +130,7 @@ signup()
           ref = "emailId"
         />
         <div style={{color:'red'}}>
-          {(this.state.error.hasOwnProperty('email'))?'invalid paramerter':''}
+          {(this.state.error.hasOwnProperty('email'))?'invalid paramerter':''}``
         </div>
         <br />
         <TextField
@@ -166,6 +176,7 @@ signup()
           ref="cnum"
         />
         {(this.state.error.hasOwnProperty('cnum'))?'invalid paramerter':''}
+        <p  style={{color:'green'}}>{this.state.signupStatus}</p>
         </Dialog>
       </div>
     );
