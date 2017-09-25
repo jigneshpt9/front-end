@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from  'react-router-dom';
+import { HashRouter as Router, Route, Switch, Link } from  'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import AppBar from 'material-ui/AppBar';
@@ -11,11 +11,32 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import LoginModal from './components/loginModal'
 import SignupModal from './components/signupmodal'
-
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 //route components
 import Home from './components/home/home';
 import MainStore from './store/mainStore';
+import ErrorStore from './store/errorStore';
 import Addblog from './components/blog/addblog'
+import RaisedButton from 'material-ui/RaisedButton';
+
+
+
+
+class Logout extends React.Component{
+
+handleLogout(){
+  MainStore.logoutUser();
+  window.location.pathname='/bloggerworld'
+}
+  render(){
+  return(
+    <div style={{float:'right'}}>
+      <FlatButton label="Logout" style={{color:'white'}} onClick={this.handleLogout.bind(this)} />
+    </div>
+  );
+}
+}
 
 export default class App extends React.Component {
   constructor(props){
@@ -39,6 +60,7 @@ export default class App extends React.Component {
   }
 
   setRightIcon(){
+    var addButtonStyle = {float: 'right',color:'white'};
     if(this.state.login == false){
       return(
         <div>
@@ -50,6 +72,8 @@ export default class App extends React.Component {
     else{
       return(
         <div>
+        <a href="#addblog"><FlatButton style={addButtonStyle} label="Add Blog"/></a>
+        <Logout/>
         </div>
       )
     }
@@ -76,11 +100,12 @@ export default class App extends React.Component {
           />
             <Router>
              <Switch>
-              <Route exact path="/bloggerworld" component={Home}/>
-              <Route exact path="/bloggerworld/addblog" component={Addblog}/>
+              <Route exact path="/" component={Home}/>
+              <Route exact path="/addblog" component={Addblog}/>
 
               </Switch>
             </Router>
+
         </div>
       </MuiThemeProvider>
     );

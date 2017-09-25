@@ -1,11 +1,22 @@
 import { EventEmitter } from 'events';
 import AJAX from './../ajax/ajax';
+import ErrorStore from './errorStore'
 
 class MainStore extends EventEmitter{
   constructor(){
     super();
     this.blogs = []
-    this.login = []
+    this.login = [];
+    this.token;
+    this.userData;
+  }
+
+  getBlogOwnerData(){
+    return this.userData;
+  }
+  getHeader(){
+    var header = {"Authorization":this.token};
+    return header;
   }
   fetchBlogs(){
       AJAX('GET','/blog',{}).then((response)=>{
@@ -19,13 +30,13 @@ class MainStore extends EventEmitter{
 
   postBlog(data)
   {
-         AJAX('POST','/blog',data).then((response)=>{
+         AJAX('POST','/blog',data,this.getHeader()).then((response)=>{
              this.emit('blog_posted')
          })
   }
   searchBlog(keyWord)
   {
-         AJAX('GET','/blog/'+keyWord,{}).then((response)=>{
+         AJAX('GET','/blog/'+keyWord,{},'').then((response)=>{
              this.blogs = response.data;
              this.emit('blogs_fetched')
          })
@@ -36,13 +47,29 @@ class MainStore extends EventEmitter{
         this.emit('user_signedup')
     })
   }
+  addComment(blogId,data){
+    AJAX('POST','/blog/comment/'+blogId,data,this.getHeader()).then((response)=>{
+        this.emit('comment_posted')
+    })
+  }
 
  loginUser(data){
-   AJAX('GET', '/'+data.emailId+'/login/'+data.password,{}).then((response)=>{
+   AJAX('GET', '/user/'+data.emailId+'/login/'+data.password,{},'').then((response)=>{
+    var header = response.headers;
+    this.token = header.authorization;
+    this.userData = response.data;
+    console.log(this.token);
         console.log("login success")
         this.emit('login_done')
-   })
-  }
+   }).catch((err)=>{
+     console.log('login failed')
+        this.emit('login_failed')
+    });
+}
+
+logoutUser(){
+  this.token='';
+}
 
 }
 

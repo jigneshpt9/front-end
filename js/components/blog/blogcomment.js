@@ -1,4 +1,5 @@
 import React from 'react';
+import MainStore from './../../store/mainStore';
 //import { Form, Text } from 'react-form';
 class Comment extends React.Component {
     render() {
@@ -38,7 +39,7 @@ class CommentForm extends React.Component {
       event.preventDefault();
       let body = this._body;
       if (body === null)
-       return
+       return;
       this.props.addComment(body.value);
   }
 }
@@ -73,11 +74,14 @@ export default class CommentBox extends React.Component {
         }
       }
 
-  _addComment(author, body) {
+  _addComment(body) {
     const comment = {
-        commentId: this.state.comments.length + 1,
-        body
+        commentId: this.props.comments.length + 1,
+        createdTime:'',
+        text:body
        };
+       console.log(this.props.blogId);
+    MainStore.addComment(this.props.blogId,comment);
      //this.setState({ comments: this.state.comments.concat([comment]) });
   }
   render(){

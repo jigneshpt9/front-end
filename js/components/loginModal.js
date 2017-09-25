@@ -4,13 +4,84 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import MainStore from '../store/mainStore';
 
+
+export class Dialogbox extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      loginStatus: true,
+      open:false
+    }
+  }
+
+  componentWillMount(){
+     MainStore.on('login_failed',function(){
+         this.setState({
+          loginStatus:false
+         });
+         this.setState({
+          open:true
+         });
+     }.bind(this));
+   }
+
+  handleOpen(){
+    this.setState({open: true});
+  };
+
+  handleClose(){
+    this.setState({open: false});
+  };
+
+  render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose.bind(this)}
+      />
+    ];
+      if ( this.state.loginStatus == false )
+      {
+       return (
+        <div>
+          <Dialog
+             title="Login Failure"
+             actions={actions}
+             modal={false}
+             open={this.state.open}
+             onRequestClose={this.handleClose}
+           >
+            Invalid Login, try again.
+          </Dialog>
+       </div>
+      )
+    }
+    else {
+      return(
+      <div>
+      </div>
+     );
+   }
+ }
+}
+
 export default class LoginModal extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       open: false,
-      loginVisible:true
+      error:''
    }
+ }
+
+ componentWillMount(){
+   MainStore.on('login_failed',()=>{
+     console.log("login failed event");
+     this.setState({
+       error:'Invalid username/password'
+     });
+   });
  }
 
   login()
@@ -20,7 +91,6 @@ export default class LoginModal extends React.Component {
       password:this.refs.password.input.value
     };
     MainStore.loginUser(data);
-    this.handleClose();
   }
 
   handleOpen(){
@@ -65,7 +135,9 @@ export default class LoginModal extends React.Component {
           type="password"
           ref="password"
         />
+        <p  style={{color:'red'}}>{this.state.error}</p>
         </Dialog>
+
       </div>
     );
   }

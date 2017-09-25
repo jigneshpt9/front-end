@@ -5,8 +5,7 @@ import MainStore from './../../store/mainStore';
 import { Link } from  'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 import SearchBar from 'material-ui-search-bar';
-
-import CommentBox from './../blog/blogcomment'
+import CommentBox from './../blog/blogcomment';
 
 export default class Home extends React.Component{
   constructor(props){
@@ -14,7 +13,8 @@ export default class Home extends React.Component{
     this.state = {
       list : [],
       listCol: 12,
-      selectedBlog:null
+      selectedBlog:null,
+      refresh:false,
     }
     MainStore.fetchBlogs();
   }
@@ -39,7 +39,7 @@ export default class Home extends React.Component{
   }
 
   renderList(){
-    if(this.state.list == null){
+    if(this.state.list === null){
       return (<div><h3>No Blogs found</h3></div>)
     }
     const list = this.state.list.map((item,index)=>
@@ -53,7 +53,7 @@ export default class Home extends React.Component{
       return (<div></div>);
     }
     else{
-      if(this.state.list == null){
+      if(this.state.list.length == 0){
         return (<div><h3>No Blogs found</h3></div>)
       }
       else{
@@ -65,7 +65,7 @@ export default class Home extends React.Component{
           <p>
             {this.state.list[this.state.selectedBlog].content}
           </p>
-          <CommentBox comments={this.state.list[this.state.selectedBlog].comments}/>
+          <CommentBox comments={this.state.list[this.state.selectedBlog].comments} blogId={this.state.list[this.state.selectedBlog].id}/>
         </div>
 
     );
@@ -82,7 +82,7 @@ export default class Home extends React.Component{
   }
 
   render(){
-    var addButtonStyle = {float: 'right'};
+
     return(
       <div>
       <SearchBar
@@ -98,8 +98,6 @@ export default class Home extends React.Component{
       }}
       />
 
-      <Link style={addButtonStyle} to="/bloggerworld/addblog"> <FlatButton label="Add Blog"/> </Link>
-
       <Grid>
       <Cell col={12-this.state.listCol}>
         {this.renderBlog()}
@@ -108,7 +106,6 @@ export default class Home extends React.Component{
         {this.renderList()}
       </Cell>
       </Grid>
-
       </div>
     )
   }
