@@ -18,7 +18,8 @@ handlePostBlog()
     title:this.refs.blogTitle.input.value,
     content:this.refs.blogContent.input.refs.input.value,
     lastUpdated: new Date(),
-    blogOwner :MainStore.getBlogOwnerData()
+    blogOwner :MainStore.getBlogOwnerData(),
+    comments:[]
   };
  console.log(data.lastUpdated);
    MainStore.postBlog(data);
@@ -35,7 +36,7 @@ componentWillMount(){
   });
   MainStore.on('blog_post_data_length_invalid',()=>{
     this.setState({
-        error:'Title should be mininum 15 chars and Content should be minimum 50 chars'
+        error:'Title should be mininum 10 chars and Content should be minimum 100 chars'
     });
   });
 }

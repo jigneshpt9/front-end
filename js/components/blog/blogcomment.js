@@ -72,6 +72,10 @@ export default class CommentBox extends React.Component {
 
   _getComments() {
       console.log(this.props.comments);
+      if (this.props.comments == null ){
+        return (<div> </div>)
+      }
+      else {
       return this.props.comments.map((comment) => {
        return (
           <Comment
@@ -82,7 +86,7 @@ export default class CommentBox extends React.Component {
 
             );
       });
-
+     }
     }
 
   _getCommentsTitle(commentCount) {
@@ -96,8 +100,15 @@ export default class CommentBox extends React.Component {
       }
 
   _addComment(body) {
+    var commentNum;
+    if (this.props.comments == null ){
+       commentNum = 0
+    }
+    else {
+       commentNum = this.props.comments.length + 1
+    }
     const comment = {
-        commentId: this.props.comments.length + 1,
+        commentId: commentNum,
         createdTime:'',
         text:body
        };

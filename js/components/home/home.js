@@ -71,7 +71,7 @@ export default class Home extends React.Component{
             <br />
             Last updated :{this.state.list[this.state.selectedBlog].lastUpdated}
           </p>
-          <CommentBox comments={this.state.list[this.state.selectedBlog].comments} blogId={this.state.list[this.state.selectedBlog].id}/>
+          <CommentBox comments={this.state.list[this.state.selectedBlog].comments} blogId={this.state.list[this.state.selectedBlog]._id}/>
         </div>
 
     );

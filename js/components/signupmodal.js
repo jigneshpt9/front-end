@@ -5,7 +5,6 @@ import Dialog from 'material-ui/Dialog';
 import MainStore from '../store/mainStore';
 
 
-
 export default class SignupModal extends React.Component {
   constructor(props){
     super(props);
@@ -24,6 +23,14 @@ export default class SignupModal extends React.Component {
      });
    });
  }
+
+ componentWillUnmount(){
+      this.setState({
+       signupStatus:''
+     });
+   }
+
+
  validateEmail(email){
    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\ w+)*(\.\w{2,3})+$/.test(email)){
       return true
@@ -62,19 +69,24 @@ export default class SignupModal extends React.Component {
    if (!this.validateEmail(emailId))
    {
      alert("Invalid email address")
+     return -1;
    }
    if (!this.validateName(fname)) {
      alert("Invalid First Name")
+     return -1;
    }
    if (!this.validateName(lname)) {
      alert("Invalid Last Name")
+     return -1;
    }
    if (!this.validatePassword(passwd,cnfpasswd))
    {
      alert('Passwords don\'t match');
+     return -1;
    }
    if (!this.validateContactNum(cnum)){
       aleart('Invalid contact number');
+      return -1;
    }
  }
 
@@ -88,7 +100,8 @@ export default class SignupModal extends React.Component {
 
 signup()
 {
-   this.validateFormData();
+   var returnVal = this.validateFormData();
+   if (returnVal != -1 ){
    let data = {
       emailId:this.refs.emailId.input.value,
       firstName:this.refs.firstName.input.value,
@@ -96,9 +109,9 @@ signup()
       contactNumber:this.refs.cnum.input.value,
       role:'user',
       password:this.refs.passwd.input.value,
-   }
+    }
    MainStore.signup(data);
-
+  }
 }
 
   render() {

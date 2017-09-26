@@ -34,7 +34,7 @@ class MainStore extends EventEmitter{
       {
           this.emit('blog_post_empty')
       }
-      else if (data.title.length <= 10 || data.content.length <= 100){
+      else if (data.title.length < 10 || data.content.length < 100){
          this.emit('blog_post_data_length_invalid')
       }
       else {
